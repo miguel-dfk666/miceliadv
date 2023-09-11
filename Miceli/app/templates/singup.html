@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <title>Miceli Registrar</title>
+ 
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <!--Stylesheet-->
+    <style media="screen">
+      *,
+*:before,
+*:after{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #080710;
+}
+.background{
+    width: 430px;
+    height: 520px;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    left: 50%;
+    top: 50%;
+}
+form{
+    height: 600px;
+    width: 450px;
+    background-color: rgba(255,255,255,0.13);
+    position: absolute;
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(8,7,16,0.6);
+    padding: 50px 35px;
+}
+form *{
+    font-family: 'Poppins',sans-serif;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    outline: none;
+    border: none;
+}
+form h3{
+    font-size: 32px;
+    font-weight: 500;
+    line-height: 42px;
+    text-align: center;
+}
+
+label{
+    display: block;
+    margin-top: 30px;
+    font-size: 16px;
+    font-weight: 500;
+}
+input{
+    display: block;
+    height: 40px;
+    width: 100%;
+    background-color: rgba(255,255,255,0.07);
+    border-radius: 3px;
+    padding: 0 10px;
+    margin-top: 2px;
+    font-size: 14px;
+    font-weight: 300;
+}
+::placeholder{
+    color: #e5e5e5;
+}
+button{
+    margin-top: 14px;
+    width: 100%;
+    background-color: #ffffff;
+    color: #080710;
+    padding: 15px 0;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.social{
+  margin-top: 30px;
+  display: flex;
+}
+.social div{
+  background: red;
+  width: 150px;
+  border-radius: 3px;
+  padding: 5px 10px 10px 5px;
+  background-color: rgba(255,255,255,0.27);
+  color: #eaf0fb;
+  text-align: center;
+}
+.social div:hover{
+  background-color: rgba(255,255,255,0.47);
+}
+.social .fb{
+  margin-left: 25px;
+}
+.social i{
+  margin-right: 4px;
+}
+
+    </style>
+</head>
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+    <form action="" method="post">
+        {% csrf_token %} 
+        <h3>Registrar-se</h3>
+
+        <label for="username">Nome de Usuário</label>
+        <input type="text" placeholder="Nome de Usuário" name="username" id="username">
+
+        <label for="email">E-mail</label>
+        <input type="email" placeholder="Insira seu E-mail" name="email" id="email">
+
+        <label for="password1">Senha</label>
+        <input type="password" placeholder="Senha" id="password1" name="password1">
+
+
+        <label for="password2">Confirmar senha</label>
+        <input type="password" placeholder="Confirmar senha" id="password2" name="password2">
+        <button type="submit">Registrar</button>
+        <a href="{% url 'login' %}" >Já possuo uma conta</a>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            // Verifique se há um parâmetro "success" na URL
+            if (urlParams.has('success')) {
+                // Exibe um alerta de sucesso
+                alert('Conta criada com sucesso!');
+                // Redireciona para a página de login
+                window.location.href = '/login/';
+            } else if (urlParams.has('error')) {
+                // Exibe um alerta de erro
+                alert('Usuário ou email já existe. Escolha um diferente.');
+            }
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            const password1 = document.getElementById('password1');
+            const password2 = document.getElementById('password2');
+    
+            form.addEventListener('submit', function(e) {
+                if (password1.value !== password2.value) {
+                    alert('As senhas não são iguais. Por favor, digite a mesma senha nos dois campos.');
+                    password2.value = ''; // Limpa o campo de confirmação de senha
+                    e.preventDefault(); // Impede o envio do formulário
+                }
+            });
+        });
+    </script>
+</body>
+</html>
