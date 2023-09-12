@@ -1,0 +1,24 @@
+/* Estilização da barra lateral */
+#sidebar {
+    position: fixed; /* Fixa a barra na lateral esquerda da página */
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px; /* Largura da barra lateral */
+    background-color: gray; /* Cor de fundo da barra lateral */
+    padding: 20px; /* Espaçamento interno da barra lateral */
+    z-index: 1; /* Coloca a barra lateral sobre o conteúdo */
+}
+
+/* Estilização dos links na barra lateral */
+#sidebar {
+    color: black; /* Cor do texto dos links */
+    text-decoration: none; /* Remove sublinhado dos links */
+    display: block; /* Faz os links ocuparem todo o espaço disponível */
+    padding: 10px 0; /* Espaçamento vertical dos links */
+}
+
+/* Estilo do ícone de livro na barra lateral */
+#sidebar .nav-link i {
+    margin-right: 10px; /* Espaçamento à direita do ícone */
+}
