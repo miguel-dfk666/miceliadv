@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from app import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = "app"
 
@@ -26,3 +28,5 @@ urlpatterns = [
     path("login/", views.Login, name="login"),
     path("", views.HomePage, name="home"),
 ]
+
+urlpatters = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
