@@ -2,6 +2,8 @@ from django.shortcuts import  render, redirect, HttpResponse, redirect, HttpResp
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login 
+from .models import Processo, Reu, Acordo, Sentenca, Advogado
+from django.db.models import Sum
 
 # register request
 def HomePage(request):
@@ -41,3 +43,23 @@ def Register(request):
     return redirect('/login/?success=Conta criada com sucesso!')
 
   return render(request, 'singup.html')
+
+
+def logout_view(request):
+    # Lógica de logout aqui
+    return redirect('login')
+
+def processar_opcao(request):
+    processos = Processo.objects.values_list('numero_processo', flat=True)
+    processos_data = Processo.objects.values_list('data_abertura', flat=True)
+    oab = Advogado.objects.values_list('numero_oab', flat=True)
+
+    # Crie uma lista que combine todas as opções
+    todas_opcoes = list(processos) + list(processos_data) + list(oab)
+
+    if request.method == 'POST':
+        opcao_selecionada = request.POST.get('opcao')
+        # Realize as operações necessárias com a opção selecionada aqui
+        # Em seguida, exiba os dashboards com as informações do banco de dados
+
+    return render(request, 'home.html', {'todas_opcoes': todas_opcoes})

@@ -4,77 +4,81 @@
 {% block 'titulo' %}Miceli HomePage{% endblock%}
 
 {% block 'head' %}
-
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/global.css' %}">
 {% endblock%}
 
 
 {% block 'body' %}
-<div class="container">
-    <br>
-        <div class="col-md">
-            <br>
-            <h1>Processo</h1>
-            <canvas id="Processo" width="250" height="200"></canvas>
-        </div>
-        
-        <div class="col-md">
-            <br>
-            <h1>Sentenças</h1>
-            <canvas id="Sentenca" width="250" height="200"></canvas>
-        </div>
-
-    </div>
-
-    <div class="row">
-        
-        <div class="col-md">
-            <br>
-
-            <h1>Acordos</h1>
-            <canvas id="acordo" width="250" height="200"></canvas>
-        </div>
-        
-        {% comment %} <div class="col-md">
-            <br>
-            <h1>Funcionários do mês: </h1>
-            <canvas id="funcionarios_do_mes" width="250" height="200"></canvas>
-        </div> {% endcomment %}
-
-    </div>
-
-
+<div class="bg-gray-200">
+  <header class="flex justify-between items-center py-4 px-8">
+      <div class="text-gray-800">
+          <img src="{% static 'image/logo.png' %}" alt="Logo da Empresa" class="w-24 h-auto">
+      </div>
+      <div>
+          <a href="{% url 'login' %}" class="text-red-500 hover:text-red-700">Logout</a>
+      </div>
+  </header>
 </div>
-<br>
-<footer class="container">
-    <br>
-    <div class="row">
-        <div style="color: white;" class="col-md centralizar">
-          CNPJ: 00.000.000/0000-00
-        </div>
 
-        <div style="color: white;" class="col-md centralizar">
-          2023 Miceli, todos os direitos reservados
+<div class="container mx-auto mt-8">
+  <form method="post" action="{% url 'processar_opcao' %}">
+    {% csrf_token %}
+    
+    <!-- Div que envolve caixa de seleção e caixa de entrada -->
+    <div class="flex items-center">
+        <div class="w-1/2 pr-4">
+            <label for="opcao" class="block font-semibold">Selecione uma opção:</label>
+            <select name="opcao" id="opcao" class="w-full px-4 py-2 mt-2 border rounded-lg">
+                <option value="numero_processo">Número de Processo</option>
+                <option value="numero_oab">Número OAB</option>
+                <option value="data_abertura">Data de Abertura</option>
+            </select>
         </div>
-
-        <div style="color: white;" class="col-md centralizar">
-          
+        
+        <div class="w-1/2 pl-4">
+            <!-- Caixa de texto para entrada específica -->
+            <div id="opcao_input" class="mt-1/2">
+                <!-- Este div será preenchido dinamicamente com o campo de entrada específico -->
+            </div>
         </div>
     </div>
-    <br>
+    
+    <button type="submit" class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">Selecionar</button>
+</form>
+</div>
 
-  </footer>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="{% static 'js/js.js' %}"></script>
 
-
+{% block javascript %}
 <script>
-    {% comment %} window.onload = function(e){
-    renderiza_total_vendido('{% url "retorna_total_vendido" %}')
-    renderiza_faturamento_mensal('{% url "relatorio_faturamento" %}')
-    renderiza_despesas_mensal()
-    renderiza_produtos_mais_vendidos('{% url "relatorio_produtos" %}')
-    renderiza_funcionario_mes('{% url "relatorio_funcionario" %}') {% endcomment %}
-}
+  document.addEventListener("DOMContentLoaded", function () {
+      const opcaoSelect = document.getElementById("opcao");
+      const opcaoInput = document.getElementById("opcao_input");
+
+      // Evento de mudança na caixa de seleção
+      opcaoSelect.addEventListener("change", function () {
+          const selectedOption = opcaoSelect.value;
+          opcaoInput.innerHTML = ""; // Limpa o conteúdo anterior
+
+          // Adiciona o campo de entrada específico com base na opção selecionada
+          if (selectedOption === "numero_processo") {
+              opcaoInput.innerHTML = '<label for="input_numero_processo">Número de Processo:</label>' +
+                  '<input type="text" name="input_numero_processo" id="input_numero_processo" class="w-full px-4 py-2 mt-2 border rounded-lg" pattern="[0-9]*" required>';
+          } else if (selectedOption === "numero_oab") {
+              opcaoInput.innerHTML = '<label for="input_numero_oab">Número OAB:</label>' +
+                  '<input type="text" name="input_numero_oab" id="input_numero_oab" class="w-full px-4 py-2 mt-2 border rounded-lg" pattern="[A-Za-z0-9]*" required>';
+          } else if (selectedOption === "data_abertura") {
+              opcaoInput.innerHTML = '<label for="input_data_abertura">Data de Abertura:</label>' +
+                  '<input type="date" name="input_data_abertura" id="input_data_abertura" class="w-full px-4 py-2 mt-2 border rounded-lg" required>';
+          }
+      });
+  });
 </script>
+{% endblock %}
+
+
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/index.js' %}"></script>
+<script>
+
+</script> {% endcomment %}
 {% endblock %}

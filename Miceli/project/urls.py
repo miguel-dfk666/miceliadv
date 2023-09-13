@@ -26,7 +26,9 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("register/", views.Register, name="singup"),
     path("login/", views.Login, name="login"),
+    path('logout/', views.logout_view, name='logout'),
     path("", views.HomePage, name="home"),
+    path('processar_opcao/', views.processar_opcao, name='processar_opcao'),
 ]
 
 urlpatters = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

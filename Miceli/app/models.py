@@ -4,13 +4,18 @@ from django.utils import timezone
 
 # Create your models here.
 class Processo(models.Model):
-  numero_processo = models.CharField(max_length=20, unique=True)
-  descricao = models.TextField()
-  data_abertura = models.DateField()
-  juiz_responsavel = models.CharField(max_length=100)
+    numero_processo = models.CharField(max_length=20, unique=True)
+    descricao = models.TextField()
+    data_abertura = models.DateField()
+    juiz_responsavel = models.CharField(max_length=100)
+    
+    reus = models.ManyToManyField('Reu', related_name='processos')
+    advogados = models.ManyToManyField('Advogado', related_name='processos')
+    sentencas = models.ManyToManyField('Sentenca', related_name='processos')
+    acordos = models.ManyToManyField('Acordo', related_name='processos')
 
-  def __str__(self):
-      return self.numero_processo
+    def __str__(self):
+        return self.numero_processo
 
 class Reu(models.Model):
   nome = models.CharField(max_length=100)
@@ -38,6 +43,7 @@ class Advogado(models.Model):
     def __str__(self):
         return self.nome
 
+
 class Sentenca(models.Model):
   processo = models.ForeignKey('Processo', on_delete=models.CASCADE)
   data_sentenca = models.DateField()
@@ -50,7 +56,10 @@ class Acordo(models.Model):
   processo = models.ForeignKey('Processo', on_delete=models.CASCADE)
   data_acordo = models.DateField()
   descricao_acordo = models.TextField()
-  valor_acordo = models.DecimalField(max_digits=10, decimal_places=2)
+  valor_acordo = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+  valor_causa = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+  valor_pedido = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
+  risco_provavel = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
   data_atualizacao = models.DateTimeField(default=timezone.now, editable=False)
 
   def save(self, *args, **kwargs):
