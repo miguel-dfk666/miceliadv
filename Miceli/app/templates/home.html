@@ -1,22 +1,80 @@
 {% extends 'base.html' %}
 {% load static %}
-
-{% block 'titulo' %}
-  Miceli HomePage
-{% endblock %}
+ 
+{% block 'titulo' %}Miceli HomePage{% endblock%}
 
 {% block 'head' %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
-<link rel="stylesheet" href="{% static 'css/global.css' %}">
-<link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet">
-{% endblock %}
+
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock%}
+
 
 {% block 'body' %}
-<header>
-  <img src="{% static 'image/logo.png' %}" alt="Logo Miceli" id="Logo">
-</header>
 <div class="container">
-  
+    <br>
+        <div class="col-md">
+            <br>
+            <h1>Processo</h1>
+            <canvas id="Processo" width="250" height="200"></canvas>
+        </div>
+        
+        <div class="col-md">
+            <br>
+            <h1>Sentenças</h1>
+            <canvas id="Sentenca" width="250" height="200"></canvas>
+        </div>
+
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md">
+            <br>
+
+            <h1>Acordos</h1>
+            <canvas id="acordo" width="250" height="200"></canvas>
+        </div>
+        
+        {% comment %} <div class="col-md">
+            <br>
+            <h1>Funcionários do mês: </h1>
+            <canvas id="funcionarios_do_mes" width="250" height="200"></canvas>
+        </div> {% endcomment %}
+
+    </div>
+
+
 </div>
+<br>
+<footer class="container">
+    <br>
+    <div class="row">
+        <div style="color: white;" class="col-md centralizar">
+          CNPJ: 00.000.000/0000-00
+        </div>
+
+        <div style="color: white;" class="col-md centralizar">
+          2023 Miceli, todos os direitos reservados
+        </div>
+
+        <div style="color: white;" class="col-md centralizar">
+          
+        </div>
+    </div>
+    <br>
+
+  </footer>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/js.js' %}"></script>
+
+
+<script>
+    {% comment %} window.onload = function(e){
+    renderiza_total_vendido('{% url "retorna_total_vendido" %}')
+    renderiza_faturamento_mensal('{% url "relatorio_faturamento" %}')
+    renderiza_despesas_mensal()
+    renderiza_produtos_mais_vendidos('{% url "relatorio_produtos" %}')
+    renderiza_funcionario_mes('{% url "relatorio_funcionario" %}') {% endcomment %}
+}
+</script>
 {% endblock %}

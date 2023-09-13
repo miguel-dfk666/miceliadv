@@ -1,8 +1,0 @@
-/* Estilização da imagem do logo */
-#Logo {
-  width: 170px; /* Largura da imagem */
-  height: auto; /* Mantém a proporção de aspecto da imagem */
-  position: absolute; /* Define a posição absoluta */
-  top: 10px; /* Distância do topo */
-  right: 10px; /* Distância da direita */
-}
