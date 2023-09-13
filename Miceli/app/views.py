@@ -2,7 +2,7 @@ from django.shortcuts import  render, redirect, HttpResponse, redirect, HttpResp
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 from django.contrib.auth import authenticate, login 
-from .models import Processo, Reu, Acordo, Sentenca, Advogado
+from .models import Processo
 from django.db.models import Sum
 
 # register request
@@ -50,12 +50,7 @@ def logout_view(request):
     return redirect('login')
 
 def processar_opcao(request):
-    processos = Processo.objects.values_list('numero_processo', flat=True)
-    processos_data = Processo.objects.values_list('data_abertura', flat=True)
-    oab = Advogado.objects.values_list('numero_oab', flat=True)
-
-    # Crie uma lista que combine todas as opções
-    todas_opcoes = list(processos) + list(processos_data) + list(oab)
+    processos = Processo.objects.all()
 
     if request.method == 'POST':
         opcao_selecionada = request.POST.get('opcao')
