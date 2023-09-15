@@ -131,9 +131,9 @@ def dashboard_numero_processo(request):
     return render(request, 'dashboard_numero_processo.html', {'processos': processos})
 
 def dashboard_numero_oab(request):
-    processos = Processo.objects.all() 
+    processos = Processo.objects.advogado_adverso_numero_oab() 
     return render(request, 'dashboard_numero_oab.html', {'processos': processos})
 
 def dashboard_data_criacao(request):
-    processos = Processo.objects.all() 
+    processos = Processo.objects.data_cadastro() 
     return render(request, 'dashboard_data_criacao.html', {'processos': processos})
