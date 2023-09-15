@@ -6,29 +6,40 @@ from django.utils import timezone
 class Processo(models.Model):
     # Processo
     numero_processo = models.CharField(max_length=20, unique=True, null=True)
-    descricao = models.TextField(default=timezone.now)
-    data_cadastro = models.DateField(null=True)
+    descricao = models.TextField(null=True)
+    data_cadastro = models.DateField(default=timezone.now)
     juiz_responsavel = models.CharField(max_length=100)
     coligacao = models.CharField(max_length=100, null=True)
+    numero_dossie = models.CharField(max_length=25, null=True)
+    tipo_de_acao = models.CharField(max_length=100, null=True)
+    obj_padrao = models.CharField(max_length=100, null=True)
 
-    # Autor do processo
-    autor_nome = models.CharField(max_length=100, null=True)
-    autor_cpf = models.CharField(max_length=14, unique=True, null=True)
-    autor_data_nascimento = models.DateField(default=timezone.now)
-    autor_endereco = models.TextField(null=True)
+    # # Autor do processo
+    # autor_nome = models.CharField(max_length=100, null=True)
+    
 
     # Réu
-    reu_nome = models.CharField(max_length=100, null=True)
-    reu_cpf = models.CharField(max_length=14, unique=True, null=True)
-    reu_data_nascimento = models.DateField(default=timezone.now)
-    reu_endereco = models.TextField(null=True)
+    # reu_nome = models.CharField(max_length=100, null=True)
+
     
-    # Advogado
-    advogado_nome = models.CharField(max_length=100, null=True)
-    advogado_cpf = models.CharField(max_length=14, unique=True, null=True)
-    advogado_data_nascimento = models.DateField(default=timezone.now)
-    advogado_endereco = models.TextField(null=True)
-    advogado_numero_oab = models.CharField(
+    # Advogado Adverso
+    advogado_adv_nome = models.CharField(max_length=100, null=True)
+    advogado_agressor = models.CharField(max_length=5, null=True)
+    advogado_adverso_numero_oab = models.CharField(
+        max_length=10,
+        validators=[
+            RegexValidator(
+                regex=r'^\d{4,6}/\w+$',
+                message='O número da OAB deve estar no formato correto (XXXX/UF). Exemplo: 1234/AB.',
+            ),
+        ],
+        unique=True,
+        null=True
+    )
+
+    # Advogado Colaborador
+    advogado_colaborador_nome = models.CharField(max_length=100, null=True)
+    advogado_colaborador_numero_oab = models.CharField(
         max_length=10,
         validators=[
             RegexValidator(

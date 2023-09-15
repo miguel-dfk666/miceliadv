@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.contrib.auth import authenticate, login 
 from .models import Processo
 from django.db.models import Sum
+import pandas as pd
 
 # register request
 def HomePage(request):
@@ -49,6 +50,7 @@ def logout_view(request):
     # Lógica de logout aqui
     return redirect('login')
 
+
 def processar_opcao(request):
     processos = Processo.objects.all()
 
@@ -58,3 +60,5 @@ def processar_opcao(request):
         # Em seguida, exiba os dashboards com as informações do banco de dados
 
     return render(request, 'home.html', {'todas_opcoes': todas_opcoes})
+
+
