@@ -23,7 +23,7 @@ class Processo(models.Model):
 
     
     # Advogado Adverso
-    advogado_adv_nome = models.CharField(max_length=100, null=True)
+    advogado_adverso = models.CharField(max_length=100, null=True)
     advogado_agressor = models.CharField(max_length=5, null=True)
     advogado_adverso_numero_oab = models.CharField(
         max_length=10,
@@ -38,7 +38,7 @@ class Processo(models.Model):
     )
 
     # Advogado Colaborador
-    advogado_colaborador_nome = models.CharField(max_length=100, null=True)
+    advogado_colaborador = models.CharField(max_length=100, null=True)
     advogado_colaborador_numero_oab = models.CharField(
         max_length=10,
         validators=[
@@ -58,7 +58,7 @@ class Processo(models.Model):
     
     # Acordo
     tipo_acordo = models.CharField(max_length=65, null=True)
-    data_acordo = models.DateField(default=timezone.now())
+    data_acordo = models.DateField(default=timezone.now)
     descricao_acordo = models.TextField(null=True)
     valor_estimado = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     valor_causa = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
@@ -66,7 +66,13 @@ class Processo(models.Model):
     valor_risco_provavel = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     data_atualizacao = models.DateTimeField(default=timezone.now, editable=True)
 
+
     def save(self, *args, **kwargs):
+        self.valor_estimado = round(self.valor_estimado, 2)
+        self.valor_causa = round(self.valor_causa, 2)
+        self.valor_pedido = round(self.valor_pedido, 2)
+        self.valor_risco_provavel = round(self.valor_risco_provavel, 2)
+
         self.data_atualizacao = timezone.now()
         super().save(*args, **kwargs)
     
