@@ -30,7 +30,7 @@ urlpatterns = [
     path("", views.HomePage, name="home"),
     path('processar_opcao/', views.processar_opcao, name='processar_opcao'),
     path('importexcel/', views.simple_upload, name='simple_upload'),
-    path('dashboard/numero-processo/', views.dashboard_numero_processo, name='dashboard_numero_processo'),
+    path('dashboard/numero-processo/', views.dashboard_numero_processo, name='dashboard-numero-processo'),
     path('dashboard/numero-oab/', views.dashboard_numero_oab, name='dashboard_numero_oab'),
     path('dashboard/data-criacao/', views.dashboard_data_criacao, name='dashboard_data_criacao'),
 ]
