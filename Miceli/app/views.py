@@ -59,16 +59,17 @@ def logout_view(request):
 
 
 def processar_opcao(request):
-    processos = Processo.objects.all()
-
     if request.method == 'POST':
-        opcao_selecionada = request.POST.get('opcao')
-        # Realize as operações necessárias com a opção selecionada aqui
-        # Em seguida, exiba os dashboards com as informações do banco de dados
+        selected_option = request.POST.get('opcao')
+        
+        if selected_option == 'numero_processo':
+            return redirect('dashboard-numero-processo')
+        elif selected_option == 'data_abertura':
+            return redirect('dashboard-data-criacao')
+        elif selected_option == 'numero_oab':
+            return redirect('dashboard-numero-oab')
 
-    todas_opcoes = processos  # Assuming you want to pass all Processo objects to the template
-
-    return render(request, 'home.html', {'todas_opcoes': todas_opcoes})
+    return render(request, 'home.html')
 
 
 def simple_upload(request):
@@ -137,3 +138,4 @@ def dashboard_numero_oab(request):
 def dashboard_data_criacao(request):
     processos = Processo.objects.data_cadastro() 
     return render(request, 'dashboard_data_criacao.html', {'processos': processos})
+
