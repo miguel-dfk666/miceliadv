@@ -1,11 +1,5 @@
 from django.contrib import admin
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
-from django.urls import reverse
-from import_export.admin import ImportExportModelAdmin
 from .models import Processo
-import pandas as pd
-
 
 @admin.register(Processo)
 class ProcessoAdmin(admin.ModelAdmin):
@@ -23,4 +17,50 @@ class ProcessoAdmin(admin.ModelAdmin):
         'coligacao',
         'tipo_de_acao',
         'obj_padrao',
+        'data_estimada_prevista',
+        'data_estimada_pagamento',
+        'valor_risco',
+        'risco',
+        'total_pago',
+        'inss_empresa',
+        'honorarios',
+        'custas_processuais',
+        'situacao',
+        'nome_desdobramento',
+        'data_ajuizamento',
+        'ult_desdobramento',
+        'instancia',
+        'rito',
+        'juizo',
+        'orgao',
+        'comarca',
+        'uf',
+        'numero',
+        'cliente',
+        'condicao_cliente',
+        'parte_adversa',
+        'condicao_adversa',
+        'cpf_cnpj_adversa',
+        'autor_contumaz',
+        'motivo_desligamento',
+        'cargo',
+        'terceiro_interessado',
+        'terceiro',
+        'terceiro_prestador',
+        'cpf_cnpj_terceiro_prestador',
+        'advogado_credenciado',
+        'tribunal',  # Adicionei o campo 'tribunal' aqui
+        'handle_perito',
+        'perito',
+        'data_encerramento',
+        'motivo_encerramento',
+        'exito',
+        'id_benner',
+        'data_evento',
+        'evento',
+        'tarefas',
+        'advogado_centralizador',
+        'valor_risco_remoto',
+        'observacao',
+        'data_atualizacao',
     )
