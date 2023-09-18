@@ -84,46 +84,126 @@ def simple_upload(request):
 
         imported_data = dataset.load(new_processo.read(), format='xlsx')
         for data in imported_data:
-            numero_processo = data[5]
-
-            # Check if a Processo with the same numero_processo already exists
+            # Verifique se já existe um Processo com o mesmo numero_processo
             existing_processo = Processo.objects.filter(numero_processo=numero_processo).first()
 
             if existing_processo:
-                # Handle the case where a record with the same numero_processo exists
-                messages.warning(request, f'Record with numero_processo {numero_processo} already exists. Skipping.')
+                # Lidar com o caso em que um registro com o mesmo numero_processo já existe
+                messages.warning(request, f'Registro com numero_processo {numero_processo} já existe. Ignorando.')
             else:
-                # Create a new Processo instance
+                # Criar uma nova instância de Processo
                 try:
-                    valor_estimado = decimal.Decimal(data[1])
-                    valor_causa = decimal.Decimal(data[2])
-                    valor_pedido = decimal.Decimal(data[3])
-                    valor_risco_provavel = decimal.Decimal(data[4])
+                    processo = Processo(numero_processo=numero_processo)
 
-                    processo = Processo(
-                        numero_processo=numero_processo,
-                        data_cadastro=data[0],
-                        coligacao=data[10],
-                        numero_dossie=data[9],
-                        tipo_de_acao=data[11],
-                        obj_padrao=data[12],
-                        advogado_adverso=data[6],
-                        advogado_agressor=data[7],
-                        advogado_colaborador=data[8],
-                        valor_estimado=valor_estimado,
-                        valor_causa=valor_causa,
-                        valor_pedido=valor_pedido,
-                        valor_risco_provavel=valor_risco_provavel,
-                    )
+                    # Preencha todos os campos do processo conforme necessário
+                    processo.data_cadastro = data[0]
+                    numero_dossie = data[1]
+                    processo.coligada = data[2]
+                    processo.agencia_departamento = data[3]
+                    processo.area = data[4]
+                    processo.tipo_de_acao = data[5]
+                    processo.objeto_padrao = data[6]
+                    processo.fase = data[7]
+                    processo.inserido_por = data[8]
+                    processo.alterado_por = data[9]
+                    processo.data_de_alteracao = data[10]
+                    processo.palavra_chave = data[11]
+                    processo.valor_estimado = decimal.Decimal(data[12])
+                    processo.valor_contingencia = decimal.Decimal(data[13])
+                    processo.valor_causa = decimal.Decimal(data[14])
+                    processo.valor_pedido = decimal.Decimal(data[15])
+                    processo.valor_risco_possivel = decimal.Decimal(data[16])
+                    processo.valor_risco_provavel = decimal.Decimal(data[17])
+                    processo.risco_provavel_s_atu = data[18]
+                    processo.valor_contingencia_civel = decimal.Decimal(data[19])
+                    processo.data_estimada_prevista = data[20]
+                    processo.data_estimada_pagamento = data[21]
+                    processo.valor_risco = decimal.Decimal(data[22])
+                    processo.risco = data[23]
+                    processo.total_pago = decimal.Decimal(data[24])
+                    processo.inss_empresa = decimal.Decimal(data[25])
+                    processo.honorarios = decimal.Decimal(data[26])
+                    processo.custas_processuais = decimal.Decimal(data[27])
+                    processo.situacao = data[28]
+                    processo.nome_desdobramento = data[29]
+                    processo.data_ajuizamento = data[30]
+                    processo.ult_desdobramento = data[31]
+                    processo.instancia = data[32]
+                    processo.rito = data[33]
+                    processo.juizo = data[34]
+                    processo.orgao = data[35]
+                    processo.comarca = data[36]
+                    processo.uf = data[37]
+                    processo.numero_processo = data[38]
+                    processo.cliente = data[39]
+                    processo.cond_cliente = data[40]
+                    processo.parte_adversa = data[41]
+                    processo.cond_adversa = data[42]
+                    processo.cpf_cnpj_adversa = data[43]
+                    processo.autor_contumaz = data[44]
+                    processo.motivo_desligamento = data[45]
+                    processo.cargo = data[46]
+                    processo.terceiro_interessado = data[47]
+                    processo.terceiro = data[48]
+                    processo.terceiro_prestador = data[49]
+                    processo.cpf_cnpj_terceiro_prestador = data[50]
+                    processo.advogado_credenciado = data[51]
+                    processo.adv_adverso = data[52]
+                    processo.adv_agressor = data[53]
+                    processo.handle_perito = data[54]
+                    processo.perito = data[55]
+                    processo.data_encerramento = data[56]
+                    processo.motivo_encerramento = data[57]
+                    processo.exito = data[58]
+                    processo.id_benner = data[59]
+                    processo.data_evento = data[60]
+                    processo.evento = data[61]
+                    processo.tarefas = data[62]
+                    processo.adv_centralizador = data[63]
+                    processo.valor_risco_remoto = decimal.Decimal(data[64])
+                    processo.observacao = data[65]
+                    processo.data_atualizada = data[66]
+                    processo.alterado_por_auditor = data[67]
+                    processo.data_alteracao_auditor = data[68]
+                    processo.danos = data[69]
+                    processo.assunto = data[70]
+                    processo.responsabilidade = data[71]
+                    processo.causas_especiais = data[72]
+                    processo.solic_enc_em = data[73]
+                    processo.pendencias = data[74]
+                    processo.inserido_por_evento = data[75]
+                    processo.perc_controlador = data[76]
+                    processo.perc_ex_controlador = data[77]
+                    processo.revisao = data[78]
+                    processo.solic_enc_por = data[79]
+                    processo.tipo_desligamento = data[80]
+                    processo.advogado_colaborador = data[81]
+                    processo.equipe = data[82]
+                    processo.data_do_fato = data[83]
+                    processo.data_de_alteracao_da_fase = data[84]
+                    processo.subarea = data[85]
+                    processo.encerrado_em = data[86]
+                    processo.encerrado_por = data[87]
+                    processo.valor_acordo = decimal.Decimal(data[88])
+                    processo.rede = data[89]
+                    processo.regional = data[90]
+                    processo.canal_de_contratacao = data[91]
+                    processo.valor_condenacao_atual = decimal.Decimal(data[92])
+                    processo.valor_encerramento = decimal.Decimal(data[93])
+                    processo.valor_contabil_geral = decimal.Decimal(data[94])
+                    processo.diferenca_encerramento = decimal.Decimal(data[95])
+                    processo.porcentagem_diferenca_enc = data[96]
+                    processo.indice_atualizacao = data[97]
+
                     processo.save()
                 except decimal.InvalidOperation:
-                    # Handle the case where the data is not a valid decimal number
-                    messages.warning(request, 'Invalid decimal value detected. Record skipped.')
+                    # Lidar com o caso em que os dados não são um número decimal válido
+                    messages.warning(request, 'Valor decimal inválido detectado. Registro ignorado.')
 
-        # After successful processing, redirect the user to a success page
+        # Após o processamento bem-sucedido, redirecione o usuário para uma página de sucesso
         return HttpResponse('Dados importados com sucesso!')
 
-    # If the HTTP method is not POST, render the import page
+    # Se o método HTTP não for POST, renderize a página de importação
     return render(request, 'importar_excel.html')
 
 
