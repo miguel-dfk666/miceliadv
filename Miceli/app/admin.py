@@ -6,6 +6,7 @@ class ProcessoAdmin(admin.ModelAdmin):
     list_display = (
         'data_cadastro',
         'valor_estimado',
+        'valor_contingencia',
         'valor_causa',
         'valor_pedido',
         'valor_risco_provavel',
@@ -14,6 +15,7 @@ class ProcessoAdmin(admin.ModelAdmin):
         'advogado_agressor',
         'advogado_colaborador',
         'numero_dossie',
+        'pasta_antiga',
         'coligacao',
         'tipo_de_acao',
         'obj_padrao',
@@ -49,7 +51,6 @@ class ProcessoAdmin(admin.ModelAdmin):
         'terceiro_prestador',
         'cpf_cnpj_terceiro_prestador',
         'advogado_credenciado',
-        'tribunal',  # Adicionei o campo 'tribunal' aqui
         'handle_perito',
         'perito',
         'data_encerramento',

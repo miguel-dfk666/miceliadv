@@ -78,127 +78,128 @@ def simple_upload(request):
         dataset = Dataset()
         new_processo = request.FILES['dados_planilha']
 
-        if not new_processo.name.endswith('xlsx'):
+        if not new_processo.name.endswith('.xlsx'):
             messages.info(request, 'Formato de arquivo inválido')
             return render(request, 'importar_excel.html')
 
         imported_data = dataset.load(new_processo.read(), format='xlsx')
         for data in imported_data:
-            # Verifique se já existe um Processo com o mesmo numero_processo
-            existing_processo = Processo.objects.filter(numero_processo=numero_processo).first()
+            try:
+                # Verifique se já existe um Processo com o mesmo numero_processo
+                numero_processo = data[41]
+                existing_processo = Processo.objects.filter(numero_processo=numero_processo).first()
 
-            if existing_processo:
-                # Lidar com o caso em que um registro com o mesmo numero_processo já existe
-                messages.warning(request, f'Registro com numero_processo {numero_processo} já existe. Ignorando.')
-            else:
-                # Criar uma nova instância de Processo
-                try:
+                if existing_processo:
+                    # Lidar com o caso em que um registro com o mesmo numero_processo já existe
+                    messages.warning(request, f'Registro com numero_processo {numero_processo} já existe. Ignorando.')
+                else:
+                    # Criar uma nova instância de Processo
                     processo = Processo(numero_processo=numero_processo)
-
                     # Preencha todos os campos do processo conforme necessário
                     processo.data_cadastro = data[0]
-                    numero_dossie = data[1]
-                    processo.coligada = data[2]
-                    processo.agencia_departamento = data[3]
-                    processo.area = data[4]
-                    processo.tipo_de_acao = data[5]
-                    processo.objeto_padrao = data[6]
-                    processo.fase = data[7]
-                    processo.inserido_por = data[8]
-                    processo.alterado_por = data[9]
-                    processo.data_de_alteracao = data[10]
-                    processo.palavra_chave = data[11]
-                    processo.valor_estimado = decimal.Decimal(data[12])
-                    processo.valor_contingencia = decimal.Decimal(data[13])
-                    processo.valor_causa = decimal.Decimal(data[14])
-                    processo.valor_pedido = decimal.Decimal(data[15])
-                    processo.valor_risco_possivel = decimal.Decimal(data[16])
-                    processo.valor_risco_provavel = decimal.Decimal(data[17])
-                    processo.risco_provavel_s_atu = data[18]
-                    processo.valor_contingencia_civel = decimal.Decimal(data[19])
-                    processo.data_estimada_prevista = data[20]
-                    processo.data_estimada_pagamento = data[21]
-                    processo.valor_risco = decimal.Decimal(data[22])
-                    processo.risco = data[23]
-                    processo.total_pago = decimal.Decimal(data[24])
-                    processo.inss_empresa = decimal.Decimal(data[25])
-                    processo.honorarios = decimal.Decimal(data[26])
-                    processo.custas_processuais = decimal.Decimal(data[27])
-                    processo.situacao = data[28]
-                    processo.nome_desdobramento = data[29]
-                    processo.data_ajuizamento = data[30]
-                    processo.ult_desdobramento = data[31]
-                    processo.instancia = data[32]
-                    processo.rito = data[33]
-                    processo.juizo = data[34]
-                    processo.orgao = data[35]
-                    processo.comarca = data[36]
-                    processo.uf = data[37]
-                    processo.numero_processo = data[38]
-                    processo.cliente = data[39]
-                    processo.cond_cliente = data[40]
-                    processo.parte_adversa = data[41]
-                    processo.cond_adversa = data[42]
-                    processo.cpf_cnpj_adversa = data[43]
-                    processo.autor_contumaz = data[44]
-                    processo.motivo_desligamento = data[45]
-                    processo.cargo = data[46]
-                    processo.terceiro_interessado = data[47]
-                    processo.terceiro = data[48]
-                    processo.terceiro_prestador = data[49]
-                    processo.cpf_cnpj_terceiro_prestador = data[50]
-                    processo.advogado_credenciado = data[51]
-                    processo.adv_adverso = data[52]
-                    processo.adv_agressor = data[53]
-                    processo.handle_perito = data[54]
-                    processo.perito = data[55]
-                    processo.data_encerramento = data[56]
-                    processo.motivo_encerramento = data[57]
-                    processo.exito = data[58]
-                    processo.id_benner = data[59]
-                    processo.data_evento = data[60]
-                    processo.evento = data[61]
-                    processo.tarefas = data[62]
-                    processo.adv_centralizador = data[63]
-                    processo.valor_risco_remoto = decimal.Decimal(data[64])
-                    processo.observacao = data[65]
-                    processo.data_atualizada = data[66]
-                    processo.alterado_por_auditor = data[67]
-                    processo.data_alteracao_auditor = data[68]
-                    processo.danos = data[69]
-                    processo.assunto = data[70]
-                    processo.responsabilidade = data[71]
-                    processo.causas_especiais = data[72]
-                    processo.solic_enc_em = data[73]
-                    processo.pendencias = data[74]
-                    processo.inserido_por_evento = data[75]
-                    processo.perc_controlador = data[76]
-                    processo.perc_ex_controlador = data[77]
-                    processo.revisao = data[78]
-                    processo.solic_enc_por = data[79]
-                    processo.tipo_desligamento = data[80]
-                    processo.advogado_colaborador = data[81]
-                    processo.equipe = data[82]
-                    processo.data_do_fato = data[83]
-                    processo.data_de_alteracao_da_fase = data[84]
-                    processo.subarea = data[85]
-                    processo.encerrado_em = data[86]
-                    processo.encerrado_por = data[87]
-                    processo.valor_acordo = decimal.Decimal(data[88])
-                    processo.rede = data[89]
-                    processo.regional = data[90]
-                    processo.canal_de_contratacao = data[91]
-                    processo.valor_condenacao_atual = decimal.Decimal(data[92])
-                    processo.valor_encerramento = decimal.Decimal(data[93])
-                    processo.valor_contabil_geral = decimal.Decimal(data[94])
-                    processo.diferenca_encerramento = decimal.Decimal(data[95])
-                    processo.porcentagem_diferenca_enc = data[96]
-                    processo.indice_atualizacao = data[97]
-
+                    processo.numero_dossie = data[1]
+                    processo.pasta_antiga = data[2]
+                    processo.natureza = data[3]
+                    processo.empresa_origem = data[4]
+                    processo.coligada = data[5]
+                    processo.agencia_departamento = data[6]
+                    processo.area = data[7]
+                    processo.tipo_de_acao = data[8]
+                    processo.objeto_padrao = data[9]
+                    processo.fase = data[10]
+                    processo.inserido_por = data[11]
+                    processo.alterado_por = data[12]
+                    processo.data_de_alteracao = data[13]
+                    processo.palavra_chave = data[14]
+                    processo.valor_estimado = data[15]
+                    processo.valor_contingencia = data[16]
+                    processo.valor_causa = data[17]
+                    processo.valor_pedido = data[18]
+                    processo.valor_risco_possivel = data[19]
+                    processo.valor_risco_provavel = data[20]
+                    processo.risco_provavel_s_atu = data[21]
+                    processo.valor_contingencia_civel = data[22]
+                    processo.data_estimada_prevista = data[23]
+                    processo.data_estimada_pagamento = data[24]
+                    processo.valor_risco = data[25]
+                    processo.risco = data[26]
+                    processo.total_pago = data[27]
+                    processo.inss_empresa = data[28]
+                    processo.honorarios = data[29]
+                    processo.custas_processuais = data[30]
+                    processo.situacao = data[31]
+                    processo.nome_desdobramento = data[32]
+                    processo.data_ajuizamento = data[33]
+                    processo.ult_desdobramento = data[34]
+                    processo.instancia = data[35]
+                    processo.rito = data[36]
+                    processo.juizo = data[37]
+                    processo.orgao = data[38]
+                    processo.comarca = data[39]
+                    processo.uf = data[40]
+                    processo.cliente = data[42]
+                    processo.cond_cliente = data[43]
+                    processo.parte_adversa = data[44]
+                    processo.cond_adversa = data[45]
+                    processo.cpf_cnpj_adversa = data[46]
+                    processo.autor_contumaz = data[47]
+                    processo.motivo_desligamento = data[48]
+                    processo.cargo = data[49]
+                    processo.terceiro_interessado = data[50]
+                    processo.terceiro = data[51]
+                    processo.terceiro_prestador = data[52]
+                    processo.cpf_cnpj_terceiro_prestador = data[53]
+                    processo.advogado_credenciado = data[54]
+                    processo.adv_adverso = data[55]
+                    processo.adv_agressor = data[56]
+                    processo.handle_perito = data[57]
+                    processo.perito = data[58]
+                    processo.data_encerramento = data[59]
+                    processo.motivo_encerramento = data[60]
+                    processo.exito = data[61]
+                    processo.id_benner = data[62]
+                    processo.data_evento = data[63]
+                    processo.evento = data[64]
+                    processo.tarefas = data[65]
+                    processo.adv_centralizador = data[65]
+                    processo.valor_risco_remoto = data[67]
+                    processo.observacao = data[68]
+                    processo.data_atualizada = data[69]
+                    processo.alterado_por_auditor = data[70]
+                    processo.data_alteracao_auditor = data[71]
+                    processo.danos = data[72]
+                    processo.assunto = data[73]
+                    processo.responsabilidade = data[74]
+                    processo.causas_especiais = data[75]
+                    processo.solic_enc_em = data[76]
+                    processo.pendencias = data[77]
+                    processo.inserido_por_evento = data[78]
+                    processo.perc_controlador = data[79]
+                    processo.perc_ex_controlador = data[80]
+                    processo.revisao = data[81]
+                    processo.solic_enc_por = data[82]
+                    processo.tipo_desligamento = data[83]
+                    processo.advogado_colaborador = data[84]
+                    processo.equipe = data[85]
+                    processo.data_do_fato = data[86]
+                    processo.data_de_alteracao_da_fase = data[87]
+                    processo.subarea = data[88]
+                    processo.encerrado_em = data[89]
+                    processo.encerrado_por = data[90]
+                    processo.valor_acordo = data[91]
+                    processo.rede = data[92]
+                    processo.regional = data[93]
+                    processo.canal_de_contratacao = data[94]
+                    processo.valor_condenacao_atual = data[95]
+                    processo.valor_encerramento = data[96]
+                    processo.valor_contabil_geral = data[97]
+                    processo.diferenca_encerramento = data[98]
+                    processo.porcentagem_diferenca_enc = data[99]
+                    processo.indice_atualizacao = data[100]
                     processo.save()
-                except decimal.InvalidOperation:
-                    # Lidar com o caso em que os dados não são um número decimal válido
-                    messages.warning(request, 'Valor decimal inválido detectado. Registro ignorado.')
+            except Exception as e:
+                # Lidar com o caso em que os dados não são um número decimal válido
+                messages.warning(request, e)
 
         # Após o processamento bem-sucedido, redirecione o usuário para uma página de sucesso
         return HttpResponse('Dados importados com sucesso!')
