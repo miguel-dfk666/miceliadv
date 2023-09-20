@@ -7,35 +7,6 @@
 
 {% block content %}
   <h1 class="text-2xl font-semibold mb-4">Dashboard de Número de Processo</h1>
-  <div class="grid grid-cols-2 gap-4">
-    {% for processo in processos %}
-      <div class="bg-white p-4 rounded shadow">
-        <p><strong>Número de Processo:</strong> {{ processo.numero_processo }}</p>
-        <p><strong>Descrição:</strong> {{ processo.descricao }}</p>
-        <p><strong>Data de Cadastro:</strong> {{ processo.data_cadastro }}</p>
-        <p><strong>Juiz Responsável:</strong> {{ processo.juiz_responsavel }}</p>
-        <p><strong>Coligação:</strong> {{ processo.coligacao }}</p>
-        <p><strong>Número de Dossiê:</strong> {{ processo.numero_dossie }}</p>
-        <p><strong>Tipo de Ação:</strong> {{ processo.tipo_de_acao }}</p>
-        <p><strong>Objeto Padrão:</strong> {{ processo.obj_padrao }}</p>
-        <p><strong>Advogado Adverso:</strong> {{ processo.advogado_adverso }}</p>
-        <p><strong>Número da OAB do Advogado Adverso:</strong> {{ processo.advogado_adverso_numero_oab }}</p>
-        <p><strong>Advogado Agressor:</strong> {{ processo.advogado_agressor }}</p>
-        <!-- Adicione mais campos conforme necessário -->
-        <hr>
-        <!-- Aqui você pode adicionar informações sobre a sentença, acordo, etc. -->
-        <p><strong>Tipo de Sentença:</strong> {{ processo.tipo_sentenca }}</p>
-        <p><strong>Data da Sentença:</strong> {{ processo.data_sentenca }}</p>
-        <p><strong>Descrição da Sentença:</strong> {{ processo.descricao_sentenca }}</p>
-        <p><strong>Tipo de Acordo:</strong> {{ processo.tipo_acordo }}</p>
-        <p><strong>Data do Acordo:</strong> {{ processo.data_acordo }}</p>
-        <p><strong>Descrição do Acordo:</strong> {{ processo.descricao_acordo }}</p>
-        <p><strong>Valor Estimado:</strong> {{ processo.valor_estimado }}</p>
-        <p><strong>Valor da Causa:</strong> {{ processo.valor_causa }}</p>
-        <p><strong>Valor Pedido:</strong> {{ processo.valor_pedido }}</p>
-        <p><strong>Valor Risco Provável:</strong> {{ processo.valor_risco_provavel }}</p>
-        <p><strong>Data de Atualização:</strong> {{ processo.data_atualizacao }}</p>
-      </div>
-    {% endfor %}
+  
   </div>
 {% endblock %}
