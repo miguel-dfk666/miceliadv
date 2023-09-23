@@ -24,15 +24,12 @@ app_name = "app"
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("register/", views.Register, name="singup"),
+    path("signup/", views.Register, name="singup"),
     path("login/", views.Login, name="login"),
     path('logout/', views.logout_view, name='logout'),
     path("", views.HomePage, name="home"),
     path('processar_opcao/', views.processar_opcao, name='processar_opcao'),
     path('importexcel/', views.simple_upload, name='simple_upload'),
-    path('dashboard/numero-processo/', views.dashboard_numero_processo, name='dashboard-numero-processo'),
-    path('dashboard/numero-oab/', views.dashboard_numero_oab, name='dashboard_numero_oab'),
-    path('dashboard/data-criacao/', views.dashboard_data_criacao, name='dashboard_data_criacao'),
     path('jet/', include('jet.urls', 'jet')),
     path('jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
 ]
