@@ -13,7 +13,7 @@ import decimal
 
 
 def HomePage(request):
-    return render(request, 'home.html')
+    return render(request, 'core/home.html')
 
 
 def Login(request):
@@ -30,8 +30,8 @@ def Login(request):
             return redirect('home')
         else:
             # Credenciais incorretas, exibe um alert box
-            return render(request, 'login.html', {'error_message': 'Usuário e/ou senha incorretos.'})
-    return render(request, 'login.html')
+            return render(request, 'auth/login.html', {'error_message': 'Usuário e/ou senha incorretos.'})
+    return render(request, 'auth/login.html')
 
 
 def Register(request):
@@ -50,7 +50,7 @@ def Register(request):
         my_user.save()
         return redirect('/login/?success=Conta criada com sucesso!')
 
-    return render(request, 'singup.html')
+    return render(request, 'auth/singup.html')
 
 
 def logout_view(request):
@@ -69,7 +69,7 @@ def processar_opcao(request):
         elif selected_option == 'numero_oab':
             return redirect('dashboard-numero-oab')
 
-    return render(request, 'home.html')
+    return render(request, 'core/home.html')
 
 
 def simple_upload(request):
@@ -80,7 +80,7 @@ def simple_upload(request):
 
         if not new_processo.name.endswith('.xlsx'):
             messages.info(request, 'Formato de arquivo inválido')
-            return render(request, 'importar_excel.html')
+            return render(request, 'core/importar_excel.html')
 
         imported_data = dataset.load(new_processo.read(), format='xlsx')
         for data in imported_data:
@@ -206,17 +206,4 @@ def simple_upload(request):
 
     # Se o método HTTP não for POST, renderize a página de importação
     return render(request, 'importar_excel.html')
-
-
-def dashboard_numero_processo(request):
-    processos = Processo.objects.all()  
-    return render(request, 'dashboard_numero_processo.html', {'processos': processos})
-
-def dashboard_numero_oab(request):
-    processos = Processo.objects.advogado_adverso_numero_oab() 
-    return render(request, 'dashboard_numero_oab.html', {'processos': processos})
-
-def dashboard_data_criacao(request):
-    processos = Processo.objects.data_cadastro() 
-    return render(request, 'dashboard_data_criacao.html', {'processos': processos})
 

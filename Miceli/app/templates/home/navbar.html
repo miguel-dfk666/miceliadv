@@ -1,0 +1,11 @@
+<div id="sidebar">
+  {% comment %} <input type="text" id="sidebar-search" placeholder="Pesquisar..." style="margin-top: 20px"> {% endcomment %}
+  <a href="{% url 'home' %}" class="sidebar-item mt-5">Andamentos</a>
+</div>
+
+<div id="content">
+  <button id="toggleSidebar">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="32" height="32">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+    </svg>
+  </button>

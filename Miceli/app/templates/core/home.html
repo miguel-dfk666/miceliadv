@@ -1,0 +1,133 @@
+{% extends 'core/base.html' %}
+{% load static %}
+ 
+{% block 'titulo' %}Miceli HomePage{% endblock %}
+
+{% block 'head' %}
+<link rel="stylesheet" href="{% static 'css/global.css' %}">
+<style>
+  /* Estilo para a barra lateral */
+  #sidebar {
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #333; /* Cor de fundo da barra lateral */
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+    z-index: 1000; /* Para garantir que a barra esteja acima do conteúdo */
+  }
+
+  /* Estilo para o botão de menu */
+  #toggleSidebar {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    background-color: #333; /* Cor de fundo do botão de menu */
+    padding: 10px;
+    border-radius: 100%;
+    cursor: pointer;
+    z-index: 1001; /* Para garantir que o botão esteja acima da barra */
+  }
+
+  /* Estilo para o conteúdo da página */
+  #content {
+    transition: margin-left .5s;
+    padding: 16px;
+  }
+
+  /* Estilo para a barra de pesquisa na barra lateral */
+  #sidebar-search {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+    padding: 10px;
+    border: none;
+    background-color: #444; /* Cor de fundo da barra de pesquisa */
+    color: white; /* Cor do texto da barra de pesquisa */
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+
+  /* Estilo para os itens da barra lateral */
+  .sidebar-item {
+    padding: 10px 20px;
+    color: white; /* Cor do texto dos itens da barra lateral */
+    text-decoration: none;
+    display: block;
+    transition: 0.3s;
+  }
+
+  /* Estilo para os itens da barra lateral quando o mouse passa por cima */
+  .sidebar-item:hover {
+    background-color: #555; /* Cor de fundo quando o mouse passa por cima */
+  }
+</style>
+{% endblock %}
+
+{% block 'body' %}
+  {%include 'home/navbar.html'%}
+  <!-- Conteúdo da página -->
+  <header class="flex justify-between items-center py-4 px-8">
+    <div class="text-gray-800 mt-4 ml-8"> <!-- Adicione a classe mt-4 para criar uma margem superior -->
+        <img src="{% static 'image/logo.png' %}" alt="Logo da Empresa" class="w-24 h-auto">
+      </div>
+    <div class="relative inline-block text-left">
+      <button id="profile-dropdown-button" class="inline-flex items-center justify-center p-2 text-gray-700 hover:text-gray-900 focus:outline-none">
+        <img src="{% static 'image/seu-avatar.png' %}" alt="{{ user.username }}" class="w-8 h-8 rounded-full mr-2">
+        {{ user.username }}
+        <svg class="w-4 h-4 ml-1 fill-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+          <path d="M10 12.354l-4.293-4.293a1 1 0 111.414-1.414L10 9.586l3.879-3.879a1 1 0 111.414 1.414L11.414 12.354a1 1 0 01-1.414 0z"/>
+        </svg>
+      </button>
+      <div id="profile-dropdown-menu" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 {% if not show_dropdown %} hidden {% endif %}">
+        <div class="py-1">
+          <a href="{% url 'login' %}" class="block px-4 py-2 text-red-500 hover:text-red-700">Logout</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Restante do conteúdo da página -->
+  <div class="container mx-auto mt-8">
+    <form method="post" action="{% url 'processar_opcao' %}">
+      {% csrf_token %}
+
+      <!-- Div que envolve caixa de seleção e caixa de entrada -->
+      <div class="flex items-center">
+        <div class="w-1/2 pr-4">
+          <label for="opcao" class="block font-semibold">Selecione uma opção:</label>
+          <select name="opcao" id="opcao" class="w-90 px-4 py-2 mt-2 border rounded-lg">
+            <option value="numero_processo">Número de Processo</option>
+            <option value="numero_oab">Número OAB</option>
+            <option value="data_abertura">Data de Abertura</option>
+          </select>
+        </div>
+        <div class="w-1/2 pl-4">
+          <!-- Caixa de texto para entrada específica -->
+          <div id="opcao_input" class="mt-1/2">
+            <!-- Este div será preenchido dinamicamente com o campo de entrada específico -->
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="mt-4 bg-gray-500 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg">Selecionar</button>
+    </form>
+  </div>
+</div>
+
+{% block javascript %}
+<script src="{% static 'js/option.js' %}">
+</script>
+<script src="{% static 'js/navbar.js' %}">
+</script>
+<script src="{% static 'js/profile.js' %}"">
+</script>
+{% endblock %}
+
+
+
+{% comment %} <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</script> {% endcomment %}
+{% endblock %}
